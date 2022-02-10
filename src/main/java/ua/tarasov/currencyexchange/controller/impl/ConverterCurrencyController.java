@@ -46,31 +46,25 @@ public class ConverterCurrencyController implements ViewController {
     }
 
     @FXML
-    void getCurrencyRateList(ActionEvent event) {
+    private void getCurrencyRateList(ActionEvent event) {
         getPage(event, currencyExchangeResource, applicationContext);
     }
 
     @FXML
-    void changeStateOfCurrencies() {
+    private void changeStateOfCurrencies() {
         Currency tempCurrency;
         tempCurrency = chooseBaseCurrencyMenu.getValue();
         chooseBaseCurrencyMenu.setValue(chooseTargetCurrencyMenu.getValue());
         chooseTargetCurrencyMenu.setValue(tempCurrency);
+        String amountText = amountOfBaseCurrency.getText();
+        if (isCorrectAmount(amountText)) getAmountOfTargetCurrency();
     }
 
     @FXML
-    void getAmountOfTargetCurrency() {
+    private void getAmountOfTargetCurrency() {
         double amountOfCurrency = 0;
         String amountText = amountOfBaseCurrency.getText();
-        try {
-            if (!amountText.startsWith("-")) {
-                amountOfCurrency = Double.parseDouble(amountText);
-                errorTextArea.setText("");
-            } else errorTextArea.setText("ERROR:\nCurrency amount cannot be negative");
-        } catch (Exception e) {
-            log.error("The amount of currency has incorrect data: value = " + amountText);
-            errorTextArea.setText("ERROR:\nThe amount of currency has incorrect data\nPlease, set the amount of currency");
-        }
+        if (isCorrectAmount(amountText)) amountOfCurrency = Double.parseDouble(amountText);
         Currency baseCurrency = chooseBaseCurrencyMenu.getValue();
         Currency targetCurrency = chooseTargetCurrencyMenu.getValue();
         if (baseCurrency != null && targetCurrency != null) {
@@ -78,5 +72,22 @@ public class ConverterCurrencyController implements ViewController {
             amountOfTargetCurrency.setText(service.convertCurrency(baseCurrency, targetCurrency, amountOfCurrency).toString());
         } else
             errorTextArea.setText("ERROR:\nThe base currency or target currency is null\nPlease, choose the currencies\n\n" + errorTextArea.getText());
+    }
+
+    private Boolean isCorrectAmount(String amountText){
+        try {
+            if (!amountText.startsWith("-")) {
+                Double.parseDouble(amountText);
+                errorTextArea.setText("");
+                return true;
+            } else {
+                errorTextArea.setText("ERROR:\nCurrency amount cannot be negative");
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("The amount of currency has incorrect data: value = " + amountText);
+            errorTextArea.setText("ERROR:\nThe amount of currency has incorrect data\nPlease, set the amount of currency");
+        }
+        return false;
     }
 }

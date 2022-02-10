@@ -10,13 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import ua.tarasov.currencyexchange.controller.ViewController;
 import ua.tarasov.currencyexchange.model.Currency;
 import ua.tarasov.currencyexchange.service.CurrencyService;
-
-import javax.annotation.PostConstruct;
 
 @Controller
 public class CurrencyController implements ViewController {
@@ -50,12 +47,12 @@ public class CurrencyController implements ViewController {
     }
 
     @FXML
-    void getCurrencyConverterPage(ActionEvent event) {
+    private void getCurrencyConverterPage(ActionEvent event) {
         getPage(event, currencyConverterResource, applicationContext);
     }
 
     @FXML
-    void addCurrencyToList() {
+    private void addCurrencyToList() {
         Currency currency = addCurrencyMenu.getValue();
         service.addToMyCurrenciesHashMap(currency.getCurrencyName());
         currencyTable.setItems(FXCollections.observableList(service.getMyCurrencyHashMap().values().stream().toList()).sorted());
