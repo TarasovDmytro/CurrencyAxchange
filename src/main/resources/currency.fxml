@@ -17,7 +17,7 @@
          </columns>
       </TableView>
       <Label alignment="CENTER_RIGHT" layoutY="28.0" prefHeight="26.0" prefWidth="444.0" text="Base currency USD: " textFill="OLDLACE" textOverrun="CLIP" underline="true" />
-      <Button fx:id="converterLinkButton" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#getCurrencyConverterPage" prefHeight="27.0" prefWidth="451.0" style="-fx-border-color: #2e18d1; -fx-border-radius: 5;" text="To currency converter" textFill="#2e18d1" />
+      <Button fx:id="converterLinkButton" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#getCurrencyConverterPage" prefHeight="27.0" prefWidth="449.0" style="-fx-border-color: #2e18d1; -fx-border-radius: 5; -fx-background-color: #2876FD;" text="To currency converter" textFill="#f5f9fd" />
       <ComboBox fx:id="addCurrencyMenu" layoutX="1.0" layoutY="29.0" onAction="#addCurrencyToList" prefHeight="26.0" prefWidth="322.0" promptText="Add currency to list" />
    </children>
 </AnchorPane>
