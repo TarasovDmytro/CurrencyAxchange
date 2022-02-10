@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="444.0" style="-fx-background-color: #838996;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.tarasov.currencyexchange.controller.impl.ConverterCurrencyController">
+
+    <Button fx:id="ratesLinkButton" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#getCurrencyRateList" prefHeight="27.0" prefWidth="450.0" style="-fx-border-color: #2e18d1; -fx-border-radius: 5;" text="To currency rate list" textFill="#2e18d1" />
+   <ComboBox fx:id="chooseBaseCurrencyMenu" layoutX="1.0" layoutY="29.0" prefHeight="35.0" prefWidth="186.0" promptText="choose the base currency" />
+   <ComboBox fx:id="chooseTargetCurrencyMenu" layoutX="251.0" layoutY="29.0" prefHeight="35.0" prefWidth="199.0" promptText="choose the target currency" />
+   <Button fx:id="changeButton" layoutX="187.0" layoutY="29.0" mnemonicParsing="false" onAction="#changeStateOfCurrencies" prefHeight="35.0" prefWidth="66.0" text="&lt;-&gt;" />
+   <TextField fx:id="amountOfBaseCurrency" layoutX="1.0" layoutY="64.0" onInputMethodTextChanged="#getAmountOfTargetCurrency" prefHeight="42.0" prefWidth="186.0" promptText="amount of base currency">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </TextField>
+   <TextField fx:id="amountOfTargetCurrency" layoutX="251.0" layoutY="64.0" prefHeight="42.0" prefWidth="199.0" promptText="amount of target currency">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </TextField>
+   <Button fx:id="onCountButton" layoutX="187.0" layoutY="64.0" mnemonicParsing="false" onAction="#getAmountOfTargetCurrency" prefHeight="42.0" prefWidth="66.0" style="-fx-border-color: #3AFD20; -fx-border-radius: 5;" text="count" />
+   <TextArea fx:id="errorTextArea" layoutX="1.0" layoutY="106.0" prefHeight="394.0" prefWidth="450.0" promptText="everything is well">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </TextArea>
+</AnchorPane>
