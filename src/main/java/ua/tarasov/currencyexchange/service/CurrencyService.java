@@ -30,7 +30,8 @@ public class CurrencyService {
             String response = getContent("https://openexchangerates.org/api/currencies.json");
             String currencyNamesJsonMap = response.replace(":", "=");
             HashMap<String, String> currencyNamesMap = jsonConverter.fromJson(currencyNamesJsonMap,
-                    new TypeToken<HashMap<String, String>>() {}.getType());
+                    new TypeToken<HashMap<String, String>>() {
+                    }.getType());
             HashMap<String, Double> currencyRate = getRateOfCurrency();
             currencyNamesMap.forEach((String key, String value) -> {
                 Currency currency = new Currency();
@@ -40,6 +41,10 @@ public class CurrencyService {
                 if (currency.getCurrencyRate() != null)
                     currencyHashMap.put(currency.getCurrencyName(), currency);
             });
+            if (!myCurrencyHashMap.isEmpty()) {
+                myCurrencyHashMap.forEach((String key, Currency value) ->
+                        myCurrencyHashMap.put(key, currencyHashMap.get(key)));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,7 +83,7 @@ public class CurrencyService {
     }
 
     public Double convertCurrency(Currency baseCurrency, Currency targetCurrency, double amountOfCurrency) {
-        double rate = targetCurrency.getCurrencyRate()/baseCurrency.getCurrencyRate();
+        double rate = targetCurrency.getCurrencyRate() / baseCurrency.getCurrencyRate();
         return amountOfCurrency * rate;
     }
 }

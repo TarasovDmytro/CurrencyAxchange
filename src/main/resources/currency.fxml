@@ -7,17 +7,24 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="444.0" style="-fx-background-color: #838996;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.tarasov.currencyexchange.controller.impl.CurrencyController">
-   <children>
-      <TableView fx:id="currencyTable" layoutY="55.0" prefHeight="439.0" prefWidth="451.0" tableMenuButtonVisible="true">
-         <columns>
-            <TableColumn fx:id="columnCurrency" editable="false" prefWidth="104.79998624324799" text="Currency" />
-            <TableColumn fx:id="columnCurrencyFullName" editable="false" prefWidth="217.59998321533203" text="Currency full name" />
-            <TableColumn fx:id="columnCurrencyRate" editable="false" prefWidth="120.79998779296875" text="Currency rate" />
-         </columns>
-      </TableView>
-      <Label alignment="CENTER_RIGHT" layoutY="28.0" prefHeight="26.0" prefWidth="444.0" text="Base currency USD: " textFill="OLDLACE" textOverrun="CLIP" underline="true" />
-      <Button fx:id="converterLinkButton" layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#getCurrencyConverterPage" prefHeight="27.0" prefWidth="449.0" style="-fx-border-color: #2e18d1; -fx-border-radius: 5; -fx-background-color: #2876FD;" text="To currency converter" textFill="#f5f9fd" />
-      <ComboBox fx:id="addCurrencyMenu" layoutX="1.0" layoutY="29.0" onAction="#addCurrencyToList" prefHeight="26.0" prefWidth="322.0" promptText="Add currency to list" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0"
+            prefWidth="444.0" style="-fx-background-color: #838996;" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ua.tarasov.currencyexchange.controller.impl.CurrencyController">
+   <TableView fx:id="currencyTable" layoutY="55.0" prefHeight="439.0" prefWidth="451.0" tableMenuButtonVisible="true">
+      <columns>
+         <TableColumn fx:id="columnCurrency" editable="false" prefWidth="104.79998624324799" text="Currency"/>
+         <TableColumn fx:id="columnCurrencyFullName" editable="false" prefWidth="217.59998321533203"
+                      text="Currency full name"/>
+         <TableColumn fx:id="columnCurrencyRate" editable="false" prefWidth="112.5999755859375" text="Currency rate"/>
+      </columns>
+   </TableView>
+   <Label alignment="CENTER_RIGHT" layoutY="28.0" prefHeight="26.0" prefWidth="444.0" text="Base currency USD: "
+          textFill="OLDLACE" textOverrun="CLIP" underline="true"/>
+   <Button fx:id="converterLinkButton" layoutX="1.0" layoutY="2.0" mnemonicParsing="false"
+           onAction="#getCurrencyConverterPage" prefHeight="27.0" prefWidth="449.0"
+           style="-fx-border-color: #2e18d1; -fx-border-radius: 5; -fx-background-color: #2876FD;"
+           text="To currency converter" textFill="#f5f9fd"/>
+   <ComboBox fx:id="addCurrencyMenu" layoutX="1.0" layoutY="29.0" onAction="#addCurrencyToList" prefHeight="26.0"
+             prefWidth="322.0" promptText="Add currency to list"/>
 </AnchorPane>

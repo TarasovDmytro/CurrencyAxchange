@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
@@ -16,6 +17,7 @@ import ua.tarasov.currencyexchange.model.Currency;
 import ua.tarasov.currencyexchange.service.CurrencyService;
 
 @Controller
+@Log4j2
 public class CurrencyController implements ViewController {
     @Value("classpath:/currency-converter.fxml")
     private Resource currencyConverterResource;
@@ -55,6 +57,7 @@ public class CurrencyController implements ViewController {
     private void addCurrencyToList() {
         Currency currency = addCurrencyMenu.getValue();
         service.addToMyCurrenciesHashMap(currency.getCurrencyName());
+        log.info(currency + "rate = " + currency.getCurrencyRate());
         currencyTable.setItems(FXCollections.observableList(service.getMyCurrencyHashMap().values().stream().toList()).sorted());
     }
 }

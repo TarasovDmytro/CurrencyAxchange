@@ -59,6 +59,11 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.rxjava</groupId>-->
+<!--            <artifactId>rxjava-spring-boot-core</artifactId>-->
+<!--            <version>1.0.8</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
