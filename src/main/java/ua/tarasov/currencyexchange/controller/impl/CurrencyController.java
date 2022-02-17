@@ -1,6 +1,6 @@
 package ua.tarasov.currencyexchange.controller.impl;
 
-import javafx.collections.FXCollections;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import ua.tarasov.currencyexchange.controller.ViewController;
 import ua.tarasov.currencyexchange.model.Currency;
 import ua.tarasov.currencyexchange.service.CurrencyService;
+
+import java.util.Collections;
 
 @Controller
 @Log4j2
@@ -41,11 +43,31 @@ public class CurrencyController implements ViewController {
 
     @FXML
     public void initialize() {
+        ObservableList<Currency> myCurrencies = FXCollections.observableList(service.getMyCurrencyHashMap()
+                        .values()
+                        .stream()
+                        .toList())
+                .sorted();
+        service.getMyCurrencyHashMap().addListener((MapChangeListener<? super String, ? super Currency>) change -> {
+            if (change.wasAdded() || change.wasRemoved()) {
+                currencyTable.setItems(FXCollections.observableList(service.getMyCurrencyHashMap()
+                                .values()
+                                .stream()
+                                .toList())
+                        .sorted());
+            }
+        });
+        ObservableList<Currency> currencies = FXCollections.observableList(service.getCurrencyHashMap()
+                        .values()
+                        .stream()
+                        .toList())
+                .sorted();
+        currencies.addListener((ListChangeListener<? super Currency>) ListChangeListener.Change::reset);
         columnCurrency.setCellValueFactory(new PropertyValueFactory<>("currencyName"));
         columnCurrencyFullName.setCellValueFactory(new PropertyValueFactory<>("currencyFullName"));
         columnCurrencyRate.setCellValueFactory(new PropertyValueFactory<>("currencyRate"));
-        currencyTable.setItems(FXCollections.observableList(service.getMyCurrencyHashMap().values().stream().toList()).sorted());
-        addCurrencyMenu.setItems(FXCollections.observableList(service.getCurrencyHashMap().values().stream().toList()).sorted());
+        currencyTable.setItems(myCurrencies);
+        addCurrencyMenu.setItems(currencies);
     }
 
     @FXML
@@ -58,6 +80,5 @@ public class CurrencyController implements ViewController {
         Currency currency = addCurrencyMenu.getValue();
         service.addToMyCurrenciesHashMap(currency.getCurrencyName());
         log.info(currency + "rate = " + currency.getCurrencyRate());
-        currencyTable.setItems(FXCollections.observableList(service.getMyCurrencyHashMap().values().stream().toList()).sorted());
     }
 }

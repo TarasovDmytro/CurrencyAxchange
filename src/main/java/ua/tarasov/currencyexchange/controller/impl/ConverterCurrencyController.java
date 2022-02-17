@@ -1,6 +1,7 @@
 package ua.tarasov.currencyexchange.controller.impl;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -41,8 +42,8 @@ public class ConverterCurrencyController implements ViewController {
     @Override
     @FXML
     public void initialize() {
-        chooseBaseCurrencyMenu.setItems(FXCollections.observableList(service.getCurrencyHashMap().values().stream().toList()).sorted());
-        chooseTargetCurrencyMenu.setItems(FXCollections.observableList(service.getCurrencyHashMap().values().stream().toList()).sorted());
+        chooseBaseCurrencyMenu.setItems(FXCollections.observableList(service.getMyCurrencyHashMap().values().stream().toList()).sorted());
+        chooseTargetCurrencyMenu.setItems(FXCollections.observableList(service.getMyCurrencyHashMap().values().stream().toList()).sorted());
     }
 
     @FXML

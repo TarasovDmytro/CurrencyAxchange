@@ -3,7 +3,11 @@ package ua.tarasov.currencyexchange.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.sun.javafx.collections.ObservableMapWrapper;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
 import lombok.Data;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ua.tarasov.currencyexchange.model.Currency;
@@ -14,14 +18,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 @Data
 public class CurrencyService {
     private final Gson jsonConverter = new Gson();
-    private final HashMap<String, Currency> currencyHashMap = new HashMap<>();
-    private final HashMap<String, Currency> myCurrencyHashMap = new HashMap<>();
+    private final ObservableMap<String, Currency> currencyHashMap;
+    private final ObservableMap<String, Currency> myCurrencyHashMap;
+
+    public CurrencyService() {
+        this.myCurrencyHashMap = new ObservableMapWrapper<>(new HashMap<>());
+        this.currencyHashMap = new ObservableMapWrapper<>(new HashMap<>());
+    }
 
     @Scheduled(fixedDelay = 60000)
     @PostConstruct
@@ -53,7 +67,7 @@ public class CurrencyService {
     private HashMap<String, Double> getRateOfCurrency() {
         String jsonRates = null;
         try {
-            String response = getContent("https://openexchangerates.org/api/latest.json?app_id=3c567128b4eb40cd9d58c34713eb3f85");
+            String response = getContent("https://openexchangerates.org/api/latest.json?app_id=3d0bc5fcd3bd4059b9dba733b23ee281");
             JsonObject rates = jsonConverter.fromJson(response, JsonObject.class);
             String stringRates = String.valueOf(rates.get("rates"));
             jsonRates = stringRates.replace(":", "=");
@@ -65,14 +79,13 @@ public class CurrencyService {
     }
 
     private String getContent(String currentUrl) throws IOException {
-        URL url = new URL(currentUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
         StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        URL url = new URL(currentUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        while (in.ready()) {
+            response.append(in.readLine());
         }
         in.close();
         return response.toString();
