@@ -1,7 +1,6 @@
 package ua.tarasov.currencyexchange.controller.impl;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -47,6 +46,14 @@ public class ConverterCurrencyController implements ViewController {
     }
 
     @FXML
+    void onChooseCurrency() {
+        if (chooseBaseCurrencyMenu.getValue() != null && chooseTargetCurrencyMenu.getValue() != null
+                && !amountOfBaseCurrency.getText().isEmpty()) {
+            getAmountOfTargetCurrency();
+        }
+    }
+
+    @FXML
     private void getCurrencyRateList(ActionEvent event) {
         getPage(event, currencyExchangeResource, applicationContext);
     }
@@ -75,7 +82,7 @@ public class ConverterCurrencyController implements ViewController {
             errorTextArea.setText("ERROR:\nThe base currency or target currency is null\nPlease, choose the currencies\n\n" + errorTextArea.getText());
     }
 
-    private Boolean isCorrectAmount(String amountText){
+    private Boolean isCorrectAmount(String amountText) {
         try {
             if (!amountText.startsWith("-")) {
                 Double.parseDouble(amountText);

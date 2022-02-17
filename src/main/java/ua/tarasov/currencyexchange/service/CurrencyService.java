@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.sun.javafx.collections.ObservableMapWrapper;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -18,11 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -91,8 +86,9 @@ public class CurrencyService {
         return response.toString();
     }
 
-    public void addToMyCurrenciesHashMap(String currencyName) {
-        myCurrencyHashMap.put(currencyName, currencyHashMap.get(currencyName));
+    public void addToMyCurrencies(Currency currency) {
+        String myCurrencyName = currency.getCurrencyName();
+        myCurrencyHashMap.put(myCurrencyName, currencyHashMap.get(myCurrencyName));
     }
 
     public Double convertCurrency(Currency baseCurrency, Currency targetCurrency, double amountOfCurrency) {
